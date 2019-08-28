@@ -5,6 +5,7 @@ import tensorflow as tf
 from RelationExtractor import RelationExtractor
 from Summary import Summarization
 from flask_cors import CORS,cross_origin
+import os
 
 app = Flask(__name__)
 
@@ -12,7 +13,11 @@ CORS(app)
 
 api = Api(app)
 
-
+if os.environ['ENV'] == 'prod':
+    config = ProductionConfig()
+else:
+    config = DevelopmentConfig()
+    
 # class for getting result from model
 relGraph = tf.Graph()
 suGraph = tf.Graph()
